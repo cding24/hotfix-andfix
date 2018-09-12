@@ -22,8 +22,8 @@ AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框�
       }
       -keep class com.alipay.euler.andfix.** { *; }
 
-2. 打补丁，首先生成一个apk文件，然后更改代码，在修复bug后生成另一个apk。
-   通过官方提供的工具apkpatch生成一个.apatch格式的补丁文件，需要提供原apk，修复后的apk，以及一个签名文件。
+2. 打补丁包，首先生成一个apk文件，然后更改代码，在修复bug后生成另一个apk。
+   通过AndFix官方提供的补丁包创建工具apkpatch生成一个.apatch格式的补丁文件，需要提供原apk，修复后的apk，以及一个签名文件。
    可以直接使用命令apkpatch查看具体的使用方法。
    使用示例：apkpatch -o D:/Patch/ -k debug.keystore -p android -a androiddebugkey -e android f bug-fix.apk t release.apk
 
