@@ -34,10 +34,13 @@ AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框�
 注意：每次产生的apatch文件的名字如果是相同的，结果会导致只有第一次的补丁能生效。只有每次名字不同才能加载，log中应该也有提示。
 
 二、andfix原理：
-    apkpatch将两个apk做一次对比，然后找出不同的部分。可以看到生成的apatch了文件，后缀改成zip再解压开，里面有一个dex文件。通过jadx查看一下源码，里面就是被修复的代码所在的类文件,这些更改过的类都加上了一个_CF的后缀，并且变动的方法都被加上了一个叫@MethodReplace的annotation，通过clazz和method指定了需要替换的方法。然后客户端sdk得到补丁文件后就会根据annotation来寻找需要替换的方法。最后由JNI层完成方法的替换。如果本地保存了多个补丁，那么AndFix会按照补丁生成的时间顺序加载补丁。具体是根据.apatch文件中的PATCH.MF的字段Created-Time。
+    apkpatch将两个apk做一次对比，然后找出不同的部分。可以看到生成的apatch了文件，后缀改成zip再解压开，里面有一个dex文件。通过jadx查看一下源码，里面就是被修复的代码所在的类文件,这些更改过的类都加上了一个_CF的后缀，并且变动的方法都被加上了一个叫@MethodReplace的annotation，通过clazz和method指定了需要替换的方法。然后客户端sdk得到补丁文件后就会根据annotation来寻找需要替换的方法。最后由JNI层完成方法的替换。如果本地保存了多个补丁，那么AndFix会按照补丁生成的时间顺序加载补丁。具体是根据.apatch文件中的PATCH.MF的字段Created-Time。    
+    AndFix通过Java的自定义注解来判断一个方法是否应该被替换，如果可以就会hook该方法并进行替换。AndFix在ART架构上的Native方法是art_replaceMethod 、在X86架构上的Native方法是dalvik_replaceMethod。他们的实现方式是不同的。对于Dalvik，它将改变目标方法的类型为Native同时hook方法的实现至AndFix自己的Native方法，这个方法称为dalvik_dispatcher,这个方法将会唤醒已经注册的回调，这就是我们通常说的hooked（挂钩）。对于ART来说，我们仅仅改变目标方法的属性来替代它。
+    
  安全验证：
     文件的签名验证：AndFix对apatch文件签名做了是否和应用的签名是同一个的验证，不是的话就不加载该补丁。
     指纹验证：为了防止有人替换掉本地保存的补丁文件，所以要验证MD5码。SecurityChecker类里面也已经做了验证处理，但是这个MD5码是保存在sharedpreference里面，如果手机已经root那么还是可以被访问的。
+     
     
   三、优缺点：
   优点：
