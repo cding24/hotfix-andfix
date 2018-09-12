@@ -8,10 +8,10 @@ AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框�
   1. 首先添加依赖
       compile 'com.alipay.euler:andfix:0.3.1@aar'
 
-   然后在Application.onCreate()中添加以下代码
-      patchManager = new PatchManager(context);
-      patchManager.init(appversion); //String appversion= getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-      patchManager.loadPatch();
+   然后在Application.onCreate()中添加以下代码：
+      patchManager = new PatchManager(context); //初始化补丁包管理器
+      patchManager.init(appversion);  //版本 String appversion= getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+      patchManager.loadPatch();      //加载所有补丁
   注意每次appversion变更都会导致所有补丁被删除,如果appversion没有改变，则会加载已经保存的所有补丁。
   然后在需要的地方调用PatchManager的addPatch方法加载新补丁，比如可以在下载补丁文件之后调用。
   
