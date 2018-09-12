@@ -13,7 +13,7 @@ AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框�
       patchManager.init(appversion);  //版本 String appversion= getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
       patchManager.loadPatch();      //加载所有补丁
   注意每次appversion变更都会导致所有补丁被删除,如果appversion没有改变，则会加载已经保存的所有补丁。
-  然后在需要的地方调用PatchManager的addPatch方法加载新补丁，比如可以在下载补丁文件之后调用。
+  然后在需要的地方调用PatchManager.addPatch()方法加载新补丁，比如可以在下载补丁文件之后调用。
   
   混淆需要加入：
       -keep class * extends java.lang.annotation.Annotation
@@ -28,7 +28,7 @@ AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框�
    使用示例：apkpatch -o D:/Patch/ -k debug.keystore -p android -a androiddebugkey -e android f bug-fix.apk t release.apk
 
 3. 通过网络传输或者adb push的方式将apatch文件传到手机上;
-4. 然后运行到patchManager.addPatch的时候就会加载补丁。
+4. 然后运行到patchManager.addPatch(path)的时候就会加载补丁。//path:补丁文件下载到本地的路径。
    加载过的补丁会被保存到data/packagename/files/apatch_opt目录下，所以下载过来的补丁用过一次就可以删除了。
 
 注意：每次产生的apatch文件的名字如果是相同的，结果会导致只有第一次的补丁能生效。只有每次名字不同才能加载，log中应该也有提示。
