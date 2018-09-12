@@ -1,14 +1,3 @@
-﻿# AndFixUseMksy
-A demo use AndFix 0.5.0
-
-讲解链接：
-
-http://blog.csdn.net/AndroidMsky/article/details/54377806
-
-AndFix的集成初体验。
-
-
-测试提交
-
-
-新建了分支
+﻿# AndFix-Demo
+A demo about using AndFix 0.5.0
+AndFix的集成使用。
