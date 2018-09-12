@@ -18,6 +18,6 @@ AndFix的集成使用。
    可以直接使用命令apkpatch查看具体的使用方法。
    使用示例：apkpatch -o D:/Patch/ -k debug.keystore -p android -a androiddebugkey -e android f bug-fix.apk t release.apk
 
-3. 通过网络传输或者adb push的方式将apatch文件传到手机上，
+3. 通过网络传输或者adb push的方式将apatch文件传到手机上;
 4. 然后运行到patchManager.addPatch的时候就会加载补丁。
    加载过的补丁会被保存到data/packagename/files/apatch_opt目录下，所以下载过来的补丁用过一次就可以删除了。
