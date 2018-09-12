@@ -2,6 +2,7 @@
 A demo about using AndFix 0.5.0
 AndFix的集成使用。
 
+AndFix，全称是Android hot-fix。是阿里开源的一个Android热补丁框架，允许APP在不重新发版本的情况下修复线上的bug。支持Android 2.3 到 6.0。
 
 一、andfix使用
   1. 首先添加依赖
